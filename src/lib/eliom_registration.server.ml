@@ -109,13 +109,12 @@ module Make_typed_xml_registration
 
     module Fmt = Xml_print.Make_typed_fmt(Xml)(Typed_xml)
 
-    let out =
-      let encode x = fst (Xml_print.Utf8.normalize_html x) in
-      Format.asprintf "%a" (Fmt.pp_elt ~encode ())
-
-    let out_list l =
-      List.map out l
-      |> String.concat ""
+    let out l =
+      Format.asprintf "%a"
+        (Format.pp_print_list ~pp_sep:(fun _ () -> ())
+           (let encode x = fst (Xml_print.Utf8.normalize_html x) in
+            Fmt.pp_elt ~encode ()))
+        l
       |> Ocsigen_stream.StringStream.put
       |> Ocsigen_stream.StringStream.make
 
@@ -126,7 +125,7 @@ module Make_typed_xml_registration
           ~content_length:None
           ~content_type:(Some "text/html")
           ~headers:(Http_headers.dyn_headers)
-          ~stream:(out_list c, None) ())
+          ~stream:(out c, None) ())
 
     module Cont_reg_base = struct
 
