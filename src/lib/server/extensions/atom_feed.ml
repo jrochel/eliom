@@ -132,11 +132,8 @@ let rec c_pcdata l = match l with | [] -> [] | a::r -> Tyxml_xml.pcdata a :: c_p
 r
 
 let print_html5 e =
-  let buffer = Buffer.create 500 in
   let encode x = fst (Xml_print.Utf8.normalize_html x) in
-  Buffer.add_string buffer
-    (Format.asprintf "%a" (Eliom_content.Html.Printer.pp_elt ~encode ()) e);
-  Buffer.contents buffer
+  Format.asprintf "%a" (Eliom_content.Html.Printer.pp_elt ~encode ()) e
 
 let inlineC ?(meta = []) ?(html = false) c = `Content (Tyxml_xml.node ~a:(a_type (if
             html then "html" else "text") :: metaAttr_extract meta) "content"
