@@ -311,7 +311,7 @@ module Svg = struct
       D.tot (Xml.make_request_node ?reset (D.toelt elt))
   end
 
-  module Printer = Xml_print.Make_typed_simple(Xml)(F)
+  module Printer = Xml_print.Make_typed_fmt(Xml)(F)
 
 end
 
@@ -420,6 +420,6 @@ module Html = struct
         (custom_data.to_string value)
   end
 
-  module Printer = Xml_print.Make_typed_simple(Xml)(F)
+  module Printer = Xml_print.Make_typed_fmt(Xml)(F)
 
 end

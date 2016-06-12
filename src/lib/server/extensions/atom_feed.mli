@@ -161,7 +161,7 @@ val plain : ?meta:[> metaAttr ] list
 
 (** HTML5 text construct *)
 val html5 : ?meta:[> metaAttr ] list
-   -> [ `PCDATA | Html_types.flow5 ] Eliom_content.Html.elt list
+   -> [ `PCDATA | Html_types.flow5 ] Eliom_content.Html.elt
    -> textConstruct
 
 (** Rights tag *)

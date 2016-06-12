@@ -131,11 +131,11 @@ let rec metaAttr_extract l = match l with
 let rec c_pcdata l = match l with | [] -> [] | a::r -> Tyxml_xml.pcdata a :: c_pcdata
 r
 
-let print_html5 l =
+let print_html5 e =
   let buffer = Buffer.create 500 in
-  let output = Buffer.add_string buffer in
   let encode x = fst (Xml_print.Utf8.normalize_html x) in
-  Eliom_content.Html.Printer.print_list ~encode ~output l;
+  Buffer.add_string buffer
+    (Format.asprintf "%a" (Eliom_content.Html.Printer.pp_elt ~encode ()) e);
   Buffer.contents buffer
 
 let inlineC ?(meta = []) ?(html = false) c = `Content (Tyxml_xml.node ~a:(a_type (if
@@ -143,7 +143,7 @@ let inlineC ?(meta = []) ?(html = false) c = `Content (Tyxml_xml.node ~a:(a_type
       (c_pcdata c))
 
 let html5C ?meta c =
-  inlineC ?meta ~html:true [print_html5 [Eliom_content.Html.F.div c]]
+  inlineC ?meta ~html:true [print_html5 (Eliom_content.Html.F.div c)]
 
 let inlineOtherC ?(meta = []) (a,b) = `Content (Tyxml_xml.node ~a:(a_medtype a ::
          metaAttr_extract meta) "content" b)

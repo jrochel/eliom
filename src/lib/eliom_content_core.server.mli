@@ -142,8 +142,9 @@ module Svg : sig
 
   end
 
-  module Printer : Xml_sigs.Typed_simple_printer with type +'a elt := 'a F.elt
-                                          and type doc := F.doc
+  module Printer : Xml_sigs.Typed_pp
+    with type +'a elt := 'a F.elt
+     and type doc := F.doc
 
 end
 
@@ -233,7 +234,8 @@ module Html : sig
 
   end
 
-  module Printer : Xml_sigs.Typed_simple_printer with type +'a elt := 'a F.elt
-                                          and type doc := F.doc
+  module Printer : Xml_sigs.Typed_pp
+    with type +'a elt := 'a F.elt
+     and type doc := F.doc
 
 end

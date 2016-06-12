@@ -33,12 +33,14 @@ module Atom_info = struct
   let emptytags = []
 end
 
-module Format = Xml_print.Make_simple(Tyxml_xml)(Atom_info)
+module Fmt = Xml_print.Make_fmt(Tyxml_xml)(Atom_info)
 
 let result_of_content feed headers =
   let b = Buffer.create 10 in
   let encode x = fst (Xml_print.Utf8.normalize_html x) in
-  Format.print_list ~output:(Buffer.add_string b) ~encode [Atom_feed.xml_of_feed feed];
+  (Atom_feed.xml_of_feed feed
+   |> Format.asprintf "%a" (Fmt.pp ~encode ())
+   |> Buffer.add_string b);
   let c = Buffer.contents b in
   let md5 = get_etag c in
   let dr = Ocsigen_http_frame.Result.default () in
