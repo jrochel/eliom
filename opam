@@ -13,7 +13,7 @@ depends: [
   "deriving" {>= "0.6"}
   "ppx_deriving"
   "ppx_tools" {>= "0.99.3"}
-  "js_of_ocaml" {>= "3.0"}
+  "js_of_ocaml" {> "3.0"}
   "js_of_ocaml-lwt"
   "js_of_ocaml-ocamlbuild" {build}
   "js_of_ocaml-ppx"
@@ -22,7 +22,7 @@ depends: [
   "lwt_log"
   "lwt_ppx"
   "lwt_camlp4"
-  "tyxml" {>= "4.0.0"}
+  "tyxml" {>= "4.3.0"}
   "ocsigenserver" {>= "2.9"}
   "ipaddr" {>= "2.1"}
   "reactiveData" {>= "0.2.1"}
