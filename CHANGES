@@ -1,4 +1,4 @@
-===== 6.4 (2018-02-08) =====
+===== 6.4 (2018-12-17) =====
 
 * Compatibility with Lwt 4.x
 * New configuration option to set html content type
