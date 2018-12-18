@@ -30,6 +30,7 @@ open Eliom_lib
 
 open Ocsigen_extensions
 
+module Xml = Simplexmlparser
 
 (****************************************************************************)
 let default_max_persistent_data_sessions_per_group = ref 5
