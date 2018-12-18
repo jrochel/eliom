@@ -26,7 +26,7 @@ depends: [
   "lwt_ppx"
   "lwt_camlp4"
   "tyxml" {>= "4.0.0" & < "4.3.0"}
-  "ocsigenserver" {>= "2.9"}
+  "ocsigenserver" {>= "2.10"}
   "ipaddr" {>= "2.1"}
   "reactiveData" {>= "0.2.1"}
   "dbm" | "sqlite3"
