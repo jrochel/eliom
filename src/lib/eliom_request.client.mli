@@ -34,6 +34,9 @@ type 'a result
 val xml_result : Dom.element Dom.document Js.t result
 val string_result : string result
 
+(** todo *)
+val transform_host : (string option -> string option) ref
+
 val send :
   ?with_credentials:bool ->
   ?expecting_process_page:bool ->
