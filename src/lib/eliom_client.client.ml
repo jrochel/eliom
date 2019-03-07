@@ -1022,6 +1022,7 @@ let change_page (type m)
            Eliom_parameter.add_nl_parameter
              nl_params Eliom_request.nl_template tmpl
          in
+         print_endline "A";
          let%lwt uri, content =
            raw_call_service
              ?absolute ?absolute_path ?https ~service ?hostname ?port ?fragment
@@ -1032,6 +1033,7 @@ let change_page (type m)
        | _ ->
          match Eliom_service.client_fun service with
          | Some f when (not ignore_client_fun) ->
+           print_endline "B";
            (* The service has a client side implementation.
               We do not make the request *)
            (* I record the function to be used for void coservices: *)
@@ -1068,11 +1070,13 @@ let change_page (type m)
            change_url_string ~replace uri;
            f get_params post_params
          | None when is_client_app () ->
+           print_endline "C";
            Lwt.return @@ exit_to
              ?absolute ?absolute_path ?https ~service ?hostname ?port
              ?fragment ?keep_nl_params ~nl_params ?keep_get_na_params
              get_params post_params
          | _ ->
+           print_endline "D";
            (* No client-side implementation *)
            with_new_page ~replace () @@ fun () ->
            reload_function := None;
@@ -1085,18 +1089,22 @@ let change_page (type m)
                  get_params post_params
              with
              | `Get (uri, _) ->
+           print_endline "E";
                Eliom_request.http_get
                  ~expecting_process_page:true ?cookies_info uri []
                  Eliom_request.xml_result
              | `Post (uri, _, p) ->
+           print_endline "F";
                Eliom_request.http_post
                  ~expecting_process_page:true ?cookies_info uri p
                  Eliom_request.xml_result
              | `Put (uri, _, p) ->
+           print_endline "G";
                Eliom_request.http_put
                  ~expecting_process_page:true ?cookies_info uri p
                  Eliom_request.xml_result
              | `Delete (uri, _, p) ->
+           print_endline "H";
                Eliom_request.http_delete
                  ~expecting_process_page:true ?cookies_info uri p
                  Eliom_request.xml_result
