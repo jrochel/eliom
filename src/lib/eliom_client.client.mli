@@ -466,4 +466,4 @@ type _ redirection =
 val perform_reload : unit -> unit Lwt.t
 
 (** todo *)
-val transform_host : (string option -> string option) ref
+val transform_host : (string option -> string option) option ref

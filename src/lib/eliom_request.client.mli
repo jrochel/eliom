@@ -35,7 +35,7 @@ val xml_result : Dom.element Dom.document Js.t result
 val string_result : string result
 
 (** todo *)
-val transform_host : (string option -> string option) ref
+val transform_host : (string option -> string option) option ref
 
 val send :
   ?with_credentials:bool ->

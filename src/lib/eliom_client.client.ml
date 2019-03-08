@@ -277,6 +277,8 @@ let create_request__
   in
   uri, get_params, post_params
 
+let transform_host = Eliom_request.transform_host
+
 let create_request_ (type m)
     ?absolute ?absolute_path ?https
     ~(service : (_, _, m, _, _, _, _, _, _, _, _) Eliom_service.t)
@@ -293,6 +295,10 @@ let create_request_ (type m)
   match Eliom_service.which_meth service with
   | Eliom_service.Get' ->
     let ((_, get_params, _) as components) =
+      let absolute = match !transform_host with
+        | None -> absolute
+        | Some _ -> Some true
+      in
       Eliom_uri.make_uri_components
         ?absolute ?absolute_path ?https ~service
         ?hostname ?port ?fragment ?keep_nl_params ?nl_params get_params
@@ -1412,5 +1418,3 @@ let () =
 let get_application_name = Eliom_process.get_application_name
 
 let set_client_html_file = Eliom_common.set_client_html_file
-
-let transform_host = Eliom_request.transform_host

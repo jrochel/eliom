@@ -113,7 +113,7 @@ let nl_template =
 let nl_template_string = "__nl_n_eliom-template.name"
 
 
-let transform_host = ref (fun h -> h)
+let transform_host = ref None
 
 (** Same as XmlHttpRequest.perform_raw_url, but:
     - sends tab cookies in an HTTP header
@@ -151,7 +151,7 @@ let send
       | _ ->
         host
     in
-    let host = !transform_host host in
+    let host = match !transform_host with None -> host | Some t -> t host in
     let cookies = Eliommod_cookies.get_cookies_to_send host https path in
     let headers = match cookies with
       | [] -> []
