@@ -151,7 +151,10 @@ let send
       | _ ->
         host
     in
-    let host = match !transform_host with None -> host | Some t -> t host in
+    let host = match !transform_host with
+      | None -> host
+      | Some t -> match host with None -> None | Some h -> Some (t h)
+    in
     let cookies = Eliommod_cookies.get_cookies_to_send host https path in
     let headers = match cookies with
       | [] -> []

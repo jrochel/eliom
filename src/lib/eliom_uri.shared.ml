@@ -72,6 +72,7 @@ let make_actual_path = Eliom_common.make_actual_path
 
 
 let make_proto_prefix
+    ?transform_host
     ?hostname
     ?port
     https
@@ -87,6 +88,7 @@ let make_proto_prefix
     | None, None -> Eliom_config.get_default_hostname ()
     | Some h, _ -> h
   in
+  let host = match transform_host with None -> host | Some t -> t host in
   let port =
     match port, sp with
     | Some p, _ -> p
@@ -111,6 +113,7 @@ let is_https https ssl service =
 
 
 let make_uri_components_ (* does not take into account getparams *)
+    ?transform_host
     ?absolute
     (* absolute is used to force absolute link.
        The default is false for regular application.
@@ -142,7 +145,7 @@ let make_uri_components_ (* does not take into account getparams *)
   let https = is_https https ssl service in
   let absolute =
     if absolute || https <> ssl
-    then Some (make_proto_prefix ?hostname ?port https)
+    then Some (make_proto_prefix ?transform_host ?hostname ?port https)
     else if absolute_path
     then Some "/"
     else None
@@ -308,6 +311,7 @@ let make_uri_components_ (* does not take into account getparams *)
     (beg, params, fragment)
 
 let make_uri_components
+    ?transform_host
     ?absolute
     ?absolute_path
     ?https
@@ -321,6 +325,7 @@ let make_uri_components
     getparams =
   let (uri, pregetparams, fragment) =
     make_uri_components_
+      ?transform_host
       ?absolute
       ?absolute_path
       ?https

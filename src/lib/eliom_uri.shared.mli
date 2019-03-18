@@ -79,6 +79,7 @@ val make_string_uri :
     {!Eliom_registration}[.*.make_uri_components] for a detailled
     description. *)
 val make_uri_components :
+  ?transform_host:(string -> string) ->
   ?absolute:bool ->
   ?absolute_path:bool ->
   ?https:bool ->
@@ -170,6 +171,7 @@ val make_post_uri_components__ :
 
 
 val make_uri_components_ :
+  ?transform_host:(string -> string) ->
   ?absolute:bool ->
   ?absolute_path:bool ->
   ?https:bool ->
@@ -206,6 +208,7 @@ val make_actual_path: string list -> string list
     containing the scheme (protocol), server and port number (if
     necessary).  *)
 val make_proto_prefix :
+  ?transform_host:(string -> string) ->
   ?hostname:string -> ?port:int ->
   bool -> string
 

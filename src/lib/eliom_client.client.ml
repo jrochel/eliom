@@ -300,6 +300,7 @@ let create_request_ (type m)
         | Some _ -> Some true
       in
       Eliom_uri.make_uri_components
+        ?transform_host:!transform_host
         ?absolute ?absolute_path ?https ~service
         ?hostname ?port ?fragment ?keep_nl_params ?nl_params get_params
     in
