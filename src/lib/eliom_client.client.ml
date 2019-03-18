@@ -1047,6 +1047,7 @@ let change_page (type m)
            Eliom_lib.Option.iter
              (fun rf -> reload_function := Some (fun () -> rf get_params))
              (Eliom_service.reload_fun service);
+           print_endline "1";
            let uri, l, l' =
              match
                create_request_
@@ -1062,8 +1063,10 @@ let change_page (type m)
              | `Delete (uri, l, l') ->
                uri, l, Some (ocamlify_params l')
            in
+           print_endline "2";
            let l = ocamlify_params l in
            update_session_info l l';
+           print_endline "3";
            let%lwt () =
              run_lwt_callbacks
                {in_cache = is_in_cache !active_page.page_id;
@@ -1073,8 +1076,11 @@ let change_page (type m)
                 target_id = None}
                (flush_onchangepage ())
            in
+           print_endline "4";
            with_new_page ~replace () @@ fun () ->
+           print_endline "5";
            change_url_string ~replace uri;
+           print_endline "6";
            f get_params post_params
          | None when is_client_app () ->
            print_endline "C";
