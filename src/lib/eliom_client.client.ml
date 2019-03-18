@@ -612,13 +612,17 @@ let stash_reload_function f =
     (List.filter (fun (id', _) -> id <> id') !reload_functions)
 
 let change_url_string ~replace uri =
+  print_endline "a";
   Lwt_log.ign_debug_f ~section:section_page "Change url string: %s" uri;
   current_uri := fst (Url.split_fragment uri);
+  print_endline "b";
   Eliom_request_info.set_current_path !current_uri;
   if Eliom_process.history_api then begin
     if replace then begin
+  print_endline "c";
       Opt.iter stash_reload_function !reload_function;
       advance_page ();
+  print_endline "d";
       Dom_html.window##.history##replaceState
         (Js.Opt.return (!active_page.page_id,
                         Js.string (if !Eliom_common.is_client_app then uri
@@ -628,7 +632,9 @@ let change_url_string ~replace uri =
          Js.Opt.return (Js.string uri))
     end
     else begin
+  print_endline "e";
       update_state();
+  print_endline "f";
       let state_id = !active_page.page_id in
       let erase_future () =
         let current_doms, garbage =
@@ -640,8 +646,11 @@ let change_url_string ~replace uri =
           List.filter (fun (id, _) -> id <= state_id.state_index)
             !reload_functions;
       in erase_future ();
+  print_endline "g";
       Opt.iter stash_reload_function !reload_function;
+  print_endline "h";
       advance_page ();
+  print_endline "i";
       Dom_html.window##.history##pushState
         (Js.Opt.return (!active_page.page_id,
                         Js.string (if !Eliom_common.is_client_app then uri
@@ -650,9 +659,12 @@ let change_url_string ~replace uri =
         (if !Eliom_common.is_client_app then Js.null else
          Js.Opt.return (Js.string uri))
     end;
+  print_endline "j";
     Eliommod_dom.touch_base ();
   end else begin
+  print_endline "k";
     current_pseudo_fragment := url_fragment_prefix_with_sharp^uri;
+  print_endline "l";
     if uri <> fst (Url.split_fragment Url.Current.as_string)
     then Dom_html.window##.location##.hash := Js.string (url_fragment_prefix^uri)
   end
