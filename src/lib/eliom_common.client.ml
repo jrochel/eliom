@@ -66,3 +66,8 @@ let
   client_html_file,    set_client_html_file =
   let r = ref "eliom.html" in
   (fun () -> !r  ),    (fun s  -> assert !is_client_app; r := s)
+
+let maybe_transform_host
+  : ?transform_host:(string -> string) -> string -> string
+  = fun ?transform_host host ->
+      match transform_host with None -> host | Some t -> t host

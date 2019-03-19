@@ -737,3 +737,5 @@ end
 
 (** Raises exception on server, only relevant for client apps *)
 val client_html_file : unit -> string
+
+val maybe_transform_host : ?transform_host:(string -> string) -> string -> string

@@ -70,7 +70,6 @@ let make_actual_path = Eliom_common.make_actual_path
 
 (*****************************************************************************)
 
-
 let make_proto_prefix
     ?transform_host
     ?hostname
@@ -88,7 +87,7 @@ let make_proto_prefix
     | None, None -> Eliom_config.get_default_hostname ()
     | Some h, _ -> h
   in
-  let host = match transform_host with None -> host | Some t -> t host in
+  let host = Eliom_common.maybe_transform_host host in
   let port =
     match port, sp with
     | Some p, _ -> p

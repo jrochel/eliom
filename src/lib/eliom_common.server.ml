@@ -1383,3 +1383,5 @@ end
 
 let client_html_file () =
   failwith "client_html_file is only defined on client"
+
+let maybe_transform_host ?transform_host:_ host = host
