@@ -651,6 +651,7 @@ let change_url_string ~replace uri =
   print_endline "h";
       advance_page ();
   print_endline "i";
+  print_endline uri;
       Dom_html.window##.history##pushState
         (Js.Opt.return (!active_page.page_id,
                         Js.string (if !Eliom_common.is_client_app then uri
