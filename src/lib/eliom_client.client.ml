@@ -611,6 +611,7 @@ let change_url_string ~replace uri =
   if Eliom_process.history_api then begin
     if replace then begin
       Opt.iter stash_reload_function !reload_function;
+      print_endline "A";
       advance_page ();
       Dom_html.window##.history##replaceState
         (Js.Opt.return (!active_page.page_id,
@@ -634,6 +635,7 @@ let change_url_string ~replace uri =
             !reload_functions;
       in erase_future ();
       Opt.iter stash_reload_function !reload_function;
+      print_endline "B";
       advance_page ();
       Dom_html.window##.history##pushState
         (Js.Opt.return (!active_page.page_id,
@@ -1298,6 +1300,7 @@ let () =
                 reload_function := Some rf;
                 let%lwt () = run_lwt_callbacks ev (flush_onchangepage ()) in
                 with_new_page ~state_id ~replace:false () @@ fun () ->
+                print_endline "C";
                 advance_page ();
                 let%lwt () = rf () () in
                 scroll_to_fragment ~offset:state.position fragment;

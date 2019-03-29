@@ -770,6 +770,7 @@ let with_new_page ?state_id ~replace () f =
   Lwt.return v
 
 let advance_page () =
+  print_endline "advance_page ()";
   let new_page = get_this_page () in
   if new_page != !active_page then begin
     let previous_id = !active_page.page_id.state_index in
